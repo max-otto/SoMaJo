@@ -53,6 +53,9 @@ class Tokenizer(object):
         self.junk_next_to_space = re.compile(r"(?:^|\s)[\u0000-\u001F\u007F-\u009F\u00AD\u061C\u200B-\u200F\u202A-\u202E\u2060\u2066-\u2069\uFEFF]+|[\u0000-\u001F\u007F-\u009F\u00AD\u061C\u200B-\u200F\u202A-\u202E\u2060\u2066-\u2069\uFEFF]+(?:\s|$)")
         self.junk_between_spaces = re.compile(r"(?:^|\s+)[\s\u0000-\u001F\u007F-\u009F\u00AD\u061C\u200B-\u200F\u202A-\u202E\u2060\u2066-\u2069\uFEFF]+(?:\s+|$)")
 
+        # My Additions
+        self.letter_hyphen = re.compile(r'\b\p{Lu}-\p{L}{3,}\b')
+
         # TAGS, EMAILS, URLs
         self.xml_declaration = re.compile(r"""<\?xml
                                               (?:                #   This group permits zero or more attributes
@@ -291,7 +294,7 @@ class Tokenizer(object):
             self.en_nonbreaking_prefixes = re.compile(r"(?<![\w-])(?:" + r'|'.join([re.escape(_) for _ in nonbreaking_prefixes]) + r")-[\w-]+", re.IGNORECASE)
             self.en_nonbreaking_suffixes = re.compile(r"\b[\w-]+-(?:" + r'|'.join([re.escape(_) for _ in nonbreaking_suffixes]) + r")(?![\w-])", re.IGNORECASE)
             self.en_nonbreaking_words = re.compile(r"\b(?:" + r'|'.join([re.escape(_) for _ in nonbreaking_words]) + r")\b", re.IGNORECASE)
-        self.en_hyphen = re.compile(r"(?<=\w)(-)(?=\w)")
+        self.hyphen = re.compile(r"(?<=\w)(-)(?=\w)")
         self.en_no = re.compile(r"\b(no\.)\s*(?=\d)", re.IGNORECASE)
         self.en_degree = re.compile(r"(?<=\d ?)°(?:F|C|Oe)\b", re.IGNORECASE)
         # quotation marks
@@ -739,6 +742,11 @@ class Tokenizer(object):
             paragraph = self._replace_regex(paragraph, self.en_other_punctuation, "symbol")
         else:
             paragraph = self._replace_regex(paragraph, self.other_punctuation, "symbol")
+
+
+        # [mod] Hyphens
+        paragraph = self._replace_regex(paragraph, self.letter_hyphen, "symbol")
+        paragraph = self._replace_regex(paragraph, self.hyphen, "symbol")
         # ellipsis
         paragraph = self._replace_regex(paragraph, self.ellipsis, "symbol")
         # dots

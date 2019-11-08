@@ -1,0 +1,3 @@
+1) Split hyphenated words
+- prevent single letter hythenated words to be split (e.g. E-Learning)
+-
