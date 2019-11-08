@@ -312,6 +312,7 @@ class Tokenizer(object):
         # self.dot = re.compile(r'(?<=[\w)])(\.)(?![\w])')
         self.dot = re.compile(r'(\.)')
         # Soft hyphen ­ „“
+        self.mwd_tokens = re.compile(r'\(? ?[m,w](?: ?(?:\/|\|) ?)[m,w](?:(?: ?(?:\/|\|) ?)d(?:iv)?)? ?\)?', re.IGNORECASE)
 
     def _get_unique_prefix(self, text):
         """Return a string that is not a substring of text."""
@@ -406,6 +407,7 @@ class Tokenizer(object):
         text = self._replace_regex(text, self.nr_abbreviations, "abbreviation")
         text = self._replace_regex(text, self.single_token_abbreviation, "abbreviation")
         text = self._replace_regex(text, self.single_letter_abbreviation, "abbreviation")
+        text = self._replace_regex(text, self.mwd_tokens, "abbreviation")
         text = self.spaces.sub(" ", text)
         text = self._replace_regex(text, self.ps, "abbreviation")
 
@@ -736,7 +738,6 @@ class Tokenizer(object):
         # other punctuation symbols
         # paragraph = self._replace_regex(paragraph, self.dividing_line, "symbol")
         if self.language == "en":
-            paragraph = self._replace_regex(paragraph, self.en_hyphen, "symbol")
             paragraph = self._replace_regex(paragraph, self.en_double_hyphen, "symbol")
             paragraph = self._replace_regex(paragraph, self.en_quotation_marks, "symbol")
             paragraph = self._replace_regex(paragraph, self.en_other_punctuation, "symbol")
