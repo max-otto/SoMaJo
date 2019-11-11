@@ -16,11 +16,12 @@ I only did some minor modifications to Thomas Proisl's code to better suit my ne
 They are rather domain specific, so there is probably no reason you should use my version.
 
 They are
-* splitting (most) tokens with hypens also in German
+* splitting (most) hyphenated tokens in German
 * added a couple of additional abbreviations not to be split
-* not splitting m/w/d tags
+* not splitting m/w/d 
 
-The following is the readme of the original tokenizer by Thomas Proisl. 
+The following is the readme of the original tokenizer by Thomas Proisl:
+
 SoMaJo is a state-of-the-art tokenizer and sentence splitter for
 German and English web and social media texts. It won the [EmpiriST
 2015 shared task](https://sites.google.com/site/empirist2015/) on
