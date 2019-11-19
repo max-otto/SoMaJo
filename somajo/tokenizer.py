@@ -312,7 +312,7 @@ class Tokenizer(object):
         # self.dot = re.compile(r'(?<=[\w)])(\.)(?![\w])')
         self.dot = re.compile(r'(\.)')
         # Soft hyphen ­ „“
-        self.mwd_tokens = re.compile(r'\(? ?[m,w](?: ?(?:\/|\|) ?)[m,w](?:(?: ?(?:\/|\|) ?)d(?:iv)?)? ?\)?', re.IGNORECASE)
+        self.mwd_tokens = re.compile(r'\(?(?:(?<=\()[ ]+)?[m,w](?: ?(?:\/|\|) ?)[m,w](?:(?: ?(?:\/|\|) ?)d(?:iv)?)?(?:[ ]+(?=)\))?\)?', re.IGNORECASE)
 
     def _get_unique_prefix(self, text):
         """Return a string that is not a substring of text."""
