@@ -128,7 +128,7 @@ class Tokenizer(object):
                                    r"(?:\b(?:D'?:|oO)\b)" +
                                    r"|" +
                                    r"|".join([re.escape(_) for _ in emoticon_list]), re.VERBOSE)
-        self.space_emoticon = re.compile(r'([:;])[ ]+([()])')
+        self.space_emoticon = re.compile(r'([:;])[ ]+([()])(?! *\+)')
         # ^3 is an emoticon, unless it is preceded by a number (with
         # optional whitespace between number and ^3)
         # ^\^3    # beginning of line, no leading characters
