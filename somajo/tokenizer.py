@@ -527,6 +527,7 @@ class Tokenizer(object):
                                 orig.append(first_char)
                             except IndexError:
                                 warnings.warn("Error aligning tokens with original text!\nOriginal text: '%s'\nToken: '%s'\nRemaining normalized text: '%s'\nValue of orig: '%s'" % (original_text, token, normalized, "".join(orig)))
+                                raise
                                 break
                         else:
                             processed.append(char)
@@ -562,6 +563,7 @@ class Tokenizer(object):
             assert len(agenda) == 0
         except AssertionError:
             warnings.warn("AssertionError: %d tokens left over" % len(agenda))
+            raise
         return elements
 
     def _tokenize(self, paragraph):
