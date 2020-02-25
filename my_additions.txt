@@ -1,3 +1,9 @@
 1) Split hyphenated words
 - prevent single letter hythenated words to be split (e.g. E-Learning)
--
+
+2) match mwd tokens
+
+3) additional abbriviations:
+- e.g. R3, C#
+
+
