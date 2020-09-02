@@ -128,7 +128,7 @@ class Tokenizer(object):
                                    r"(?:\b(?:D'?:|oO)\b)" +
                                    r"|" +
                                    r"|".join([re.escape(_) for _ in emoticon_list]), re.VERBOSE)
-        self.space_emoticon = re.compile(r'([:;])[ ]+([()])(?! *\+)')
+        self.space_emoticon = re.compile(r'([:;])[ ]+([()])(?! *[\+0])')
         # ^3 is an emoticon, unless it is preceded by a number (with
         # optional whitespace between number and ^3)
         # ^\^3    # beginning of line, no leading characters
@@ -312,7 +312,6 @@ class Tokenizer(object):
         # self.dot = re.compile(r'(?<=[\w)])(\.)(?![\w])')
         self.dot = re.compile(r'(\.)')
         # Soft hyphen ­ „“
-        self.mwd_tokens = re.compile(r'[\(\[]+(m|w|d|f|h)\.? ?([\/| \(,\-\_\*]){0,2} ?(m|w|d|f)\.? ?(([\/|\( ,\-\_\*]){0,2} ?(diverse|divers|div|int|gn|m|w|d|f|x|n|\*)\.?)?([\)\],]+|$)', re.IGNORECASE)
 
     def _get_unique_prefix(self, text):
         """Return a string that is not a substring of text."""
@@ -407,7 +406,6 @@ class Tokenizer(object):
         text = self._replace_regex(text, self.nr_abbreviations, "abbreviation")
         text = self._replace_regex(text, self.single_token_abbreviation, "abbreviation")
         text = self._replace_regex(text, self.single_letter_abbreviation, "abbreviation")
-        text = self._replace_regex(text, self.mwd_tokens, "abbreviation")
         text = self.spaces.sub(" ", text)
         text = self._replace_regex(text, self.ps, "abbreviation")
 
